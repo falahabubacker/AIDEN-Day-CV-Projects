@@ -1,20 +1,24 @@
-let textMagnets = ["hello", "hiii", "sweet", "pattvira"];
+// let textMagnets = ["w", "elc", "o", "me", "to", "ai", "de", "n", "d", "ay"];
+let id = 0;
 
 class Magnet {
   constructor() {
-    this.t = random(textMagnets);
-    this.x = random(width);
-    this.y = random(height);
-    this.angle = random(TWO_PI);
+
+    this.t = textMagnets[id];
+    this.x = random(0, width);
+    this.y = random(0, height);
+    this.angle = TWO_PI;
     this.c = color(255);
     
-    this.bbox = font.textBounds(this.t, this.x, this.y, size);
+    this.bbox = font.textBounds(this.t, this.x, this.y+10, size);
     this.pos = createVector(this.bbox.x, this.bbox.y);
     this.w = this.bbox.w;
     this.h = this.bbox.h;
     
     this.fingerx = 0;
     this.fingery = 0;
+
+    id += 1;
   }
   
   display() {
@@ -33,7 +37,7 @@ class Magnet {
     pop();
     
     fill(255, 0, 0);
-    ellipse(this.fingerx, this.fingery, 10, 10);
+    ellipse(this.fingerx, this.fingery, 20, 20);
   }
   
   touch(thumbx, thumby, indexx, indexy) {

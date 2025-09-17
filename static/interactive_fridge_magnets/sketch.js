@@ -9,8 +9,9 @@ https://www.pattvira.com/
 */
 
 let video; let handPose; let hands = [];
-let font; let size = 35;
-let magnets = []; let num = 5;
+let font; let size = 50;
+let textMagnets = ["w", "elc", "o", "me", "to", "ai", "de", "n", "d", "ay"];
+let magnets = []; let num = textMagnets.length;
 
 function preload() {
   font = loadFont("static/interactive_fridge_magnets/Outfit-Regular.ttf"); // {{ url_for('static', filename='interactive_fridge_magnets/Outfit-Regular.ttf') }}
@@ -18,9 +19,10 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(640, 480);
+  createCanvas(640*2, 480*2);
   // Detect video & load ML model
-  video = createCapture(VIDEO, {flipped: true});
+  video = createCapture(VIDEO, { flipped: true });
+  video.size(640*2, 480*2)
   video.hide();
   handPose.detectStart(video, gotHands);
   

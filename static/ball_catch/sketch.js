@@ -20,8 +20,9 @@ const INDEX_FINGER_TIP = 8;
 // Matter.js 
 const {Engine, Body, Bodies, Composite, Composites, Constraint, Vector} = Matter;
 let engine;
-let bridge; let num = 10; let radius = 10; let length = 25;
+let bridge; let num = 13; let radius = 20; let length = 50;
 let circles = [];
+let last_time = Date.now();
 
 let colorPalette = ["#abcd5e", "#14976b", "#2b67af", "#62b6de", "#f589a3", "#ef562f", "#fc8405", "#f9d531"]; 
 
@@ -31,12 +32,11 @@ function preload() {
   bodyPose = ml5.bodyPose("BlazePose");
 }
 
-
 function setup() {
-  createCanvas(640, 480);
+  createCanvas(640*2, 480*2);
   // Create the webcam video and hide it
   video = createCapture(VIDEO, {flipped: true});
-  video.size(640, 480);
+  video.size(640*2, 480*2);
   video.hide();
   // start detecting hands from the webcam video
   // handPose.detectStart(video, gotHands);
@@ -55,8 +55,9 @@ function draw() {
   // Draw the webcam video
   image(video, 0, 0, width, height);
   
-  if (random() < 0.1) {
+  if (Date.now() - last_time > 500) {
     circles.push(new Circle());
+    last_time = Date.now()
   }
   
   for (let i=circles.length-1; i>=0; i--) {
@@ -83,8 +84,6 @@ function draw() {
     bridge.bodies[bridge.bodies.length-1].position.y = leftHand.y;
     bridge.display();
   }
-  
-  
 }
 
 // Callback function for when handPose outputs data

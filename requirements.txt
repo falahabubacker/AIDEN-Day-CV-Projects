@@ -1,0 +1,10 @@
+blinker
+cffi
+click
+cryptography
+Flask
+itsdangerous
+Jinja2
+MarkupSafe
+pycparser
+Werkzeug

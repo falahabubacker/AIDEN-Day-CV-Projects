@@ -1,8 +1,8 @@
 class Circle {
   constructor() {
     let x = random(10, width - 10);
-    let y = 40;
-    this.r = 10;
+    let y = -10;
+    this.r = 20;
     this.c = random(colorPalette);
     this.done = false;
     
