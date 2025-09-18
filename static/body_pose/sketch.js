@@ -1,95 +1,74 @@
-// 3D Pose Detection with BlazePose and WEBGL
-// https://thecodingtrain.com/tracks/ml5js-beginners-guide/ml5/7-bodypose/pose-detection
+// ml5.js Body Pose Detection Example
+// Based on https://thecodingtrain.com/tracks/ml5js-beginners-guide/ml5/7-bodypose/pose-detection
 
 let video;
 let bodyPose;
 let connections;
 let poses = [];
-let angle = 0;
 
 function preload() {
-  // Initialize BlazePose model for 3D pose estimation
+  // Initialize MoveNet model for body pose detection
   bodyPose = ml5.bodyPose("BlazePose");
-}
 
-function gotPoses(results) {
-  poses = results;
+  // Load an image to analyze
+  // img = loadImage("embarrassing.jpg");
+  video = createCapture(VIDEO, {flipped: true});
+  video.hide();
 }
 
 function setup() {
-  // Load and loop the video for pose detection
-  video = createCapture(VIDEO, { flipped: true });
-  video.size(640*2, 480*2);
-  
-  createCanvas(640*2, 480*2, WEBGL);
+  // Create canvas matching the image dimensions
+  createCanvas(640*2, 480*2);
 
-  // Start detecting poses
+  // Start detecting poses in the loaded image
   bodyPose.detectStart(video, gotPoses);
 
-  // Retrieve the skeleton connections used by the model
+  // Retrieve the skeleton structure used by the model
   connections = bodyPose.getSkeleton();
 }
 
-function draw() {
-  scale(height / 2);
-  orbitControl();
-  // rotateY(angle);
-  angle += 0.02;
-  background(0);
+function gotPoses(results) {
+  // Store detected poses in the global array
+  poses = results;
+}
 
-  // Ensure at least one pose is detected
+function draw() {
+  // Display the image as the background
+  createCanvas(640*2, 480*2);
+
+  // Ensure at least one pose is detected before proceeding
   if (poses.length > 0) {
     let pose = poses[0];
 
-    // Draw skeleton connections
+    // Loop through the skeleton connections and draw lines
     for (let i = 0; i < connections.length; i++) {
       let connection = connections[i];
       let a = connection[0];
       let b = connection[1];
-      let keyPointA = pose.keypoints3D[a];
-      let keyPointB = pose.keypoints3D[b];
-
+      let keyPointA = pose.keypoints[a];
+      let keyPointB = pose.keypoints[b];
       let confA = keyPointA.confidence;
       let confB = keyPointB.confidence;
 
-      // Only draw connections with sufficient confidence
+      // Only draw lines if both keypoints have sufficient confidence
       if (confA > 0.1 && confB > 0.1) {
-        stroke(0, 255, 255);
-        strokeWeight(4);
-        beginShape();
-        vertex(width - keyPointA.x, keyPointA.y, keyPointA.z);
-        vertex(width - keyPointB.x, keyPointB.y, keyPointB.z);
-        endShape();
+        stroke(0, 0, 0);
+        strokeWeight(8);
+        line(width - keyPointA.x, keyPointA.y, width - keyPointB.x, keyPointB.y);
       }
     }
 
-    // Draw keypoints as rotating 3D boxes
+    // Loop through all keypoints and draw circles
     for (let i = 0; i < pose.keypoints.length; i++) {
-      let keypoint = pose.keypoints3D[i];
-      stroke(255, 0, 255);
-      strokeWeight(1);
-      fill(255, 150);
+      let keypoint = pose.keypoints[i];
+      fill(0);
+      stroke(0, 0, 0);
+      strokeWeight(3);
 
+      // Only draw keypoints with sufficient confidence
       if (keypoint.confidence > 0.1) {
-        push();
-        translate(width - keypoint.x, keypoint.y, keypoint.z);
-        rotateZ(angle);
-        box(0.05);
-        pop();
+        circle(width - keypoint.x, keypoint.y, 8);
       }
     }
   }
-
-  // Draw a ground plane
-  stroke(255);
-  rectMode(CENTER);
-  strokeWeight(1);
-  fill(255, 100);
-  translate(0, 1);
-  rotateX(PI / 2);
-  square(0, 0, 2);
-}
-
-function mousePressed() {
-  console.log(poses);
 }

@@ -9,8 +9,8 @@ https://www.pattvira.com/
 */
 
 let video; let handPose; let hands = [];
-let font; let size = 50;
-let textMagnets = ["w", "elc", "o", "me", "to", "ai", "de", "n", "d", "ay"];
+let font; let size = 60;
+let textMagnets = ["Welcome", "to", "aiden", "day!"];
 let magnets = []; let num = textMagnets.length;
 
 function preload() {

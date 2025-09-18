@@ -5,12 +5,12 @@ class Magnet {
   constructor() {
 
     this.t = textMagnets[id];
-    this.x = random(0, width);
-    this.y = random(0, height);
+    this.x = random(50, width-50);
+    this.y = random(50, height-50);
     this.angle = TWO_PI;
     this.c = color(255);
     
-    this.bbox = font.textBounds(this.t, this.x, this.y+10, size);
+    this.bbox = font.textBounds(this.t, this.x, this.y-10, size);
     this.pos = createVector(this.bbox.x, this.bbox.y);
     this.w = this.bbox.w;
     this.h = this.bbox.h;
@@ -47,7 +47,7 @@ class Magnet {
     
     let distFromFingers = dist(this.pos.x, this.pos.y, this.fingerx, this.fingery);
     
-    if (distBetweenFingers < 40 && distFromFingers < this.w/2) {
+    if (distBetweenFingers < 50 && distFromFingers < this.w/2) {
       this.c = color(255, 0, 0);
       this.pos.x = this.fingerx;
       this.pos.y = this.fingery;

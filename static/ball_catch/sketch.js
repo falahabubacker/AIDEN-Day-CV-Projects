@@ -20,7 +20,7 @@ const INDEX_FINGER_TIP = 8;
 // Matter.js 
 const {Engine, Body, Bodies, Composite, Composites, Constraint, Vector} = Matter;
 let engine;
-let bridge; let num = 13; let radius = 20; let length = 50;
+let bridge; let num = 7; let radius = 17; let length = 50;
 let circles = [];
 let last_time = Date.now();
 
