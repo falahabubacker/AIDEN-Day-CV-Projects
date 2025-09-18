@@ -13,6 +13,7 @@ let handPose;
 let video;
 let hands = [];
 let poses = [];
+let lerpPoints;
 
 const THUMB_TIP = 4;
 const INDEX_FINGER_TIP = 8;
@@ -71,8 +72,8 @@ function draw() {
   }
   
   if (poses.length > 0) {
-    let rightHand = poses[0].keypoints[15];
-    let leftHand = poses[0].keypoints[16];
+    let rightHand = poses[0].keypoints[19];
+    let leftHand = poses[0].keypoints[20];
     fill(0, 255, 0);
     noStroke();
     circle(width - rightHand.x, rightHand.y, 10);
