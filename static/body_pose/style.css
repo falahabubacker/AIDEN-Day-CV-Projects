@@ -3,10 +3,11 @@ html, body {
   margin: 0;
   padding: 0;
   display: flex;
-  flex-direction: row;
+  flex-direction: row-reverse;
   justify-content: center;
   align-items: center;
   background: beige;
+  gap: 20px;
 }
 main {
   border: 2px;
@@ -15,9 +16,25 @@ main {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  border: 7px solid rgb(116, 187, 95);
+  border: 7px solid rgb(235, 86, 148);
+  border-radius: 5px;
+}
+video {
+  border: 7px solid rgb(86, 138, 235);
   border-radius: 5px;
 }
 canvas {
   display: block;
+}
+.stickman {
+  position: absolute;
+  top: -50px;
+  right: 100px;
+}
+
+.blazepose {
+  position: absolute;
+  top: -100px;
+  left: 20%;
+  width: 1500px;
 }

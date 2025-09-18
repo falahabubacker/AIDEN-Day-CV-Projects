@@ -7,18 +7,20 @@ let connections;
 let poses = [];
 
 function preload() {
+  
   // Initialize MoveNet model for body pose detection
   bodyPose = ml5.bodyPose("BlazePose");
 
   // Load an image to analyze
   // img = loadImage("embarrassing.jpg");
-  video = createCapture(VIDEO, {flipped: true});
-  video.hide();
+  video = createCapture(VIDEO, { flipped: true });
+  video.size(640*2, 480*2);
+  // video.hide();
 }
 
 function setup() {
   // Create canvas matching the image dimensions
-  createCanvas(640*1.8, 480*1.8);
+  createCanvas(640*2, 480*2);
 
   // Start detecting poses in the loaded image
   bodyPose.detectStart(video, gotPoses);
@@ -33,9 +35,9 @@ function gotPoses(results) {
 }
 
 function draw() {
-  // Display the image as the background
+  // image(video, 0, 0, width, height);
   // createCanvas(640*1.8, 480*1.8);
-  image(video, 0, 0, width, height);
+  background('#F5F5DC');
 
   // Ensure at least one pose is detected before proceeding
   if (poses.length > 0) {
@@ -72,4 +74,6 @@ function draw() {
       }
     }
   }
+
+  // clear();
 }
