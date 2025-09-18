@@ -13,7 +13,7 @@ let handPose;
 let video;
 let hands = [];
 let poses = [];
-let lerpPoints;
+let lerpPoints = [];
 
 const THUMB_TIP = 4;
 const INDEX_FINGER_TIP = 8;
@@ -34,10 +34,10 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(640*2, 480*2);
+  createCanvas(640*1.8, 480*1.8);
   // Create the webcam video and hide it
   video = createCapture(VIDEO, {flipped: true});
-  video.size(640*2, 480*2);
+  video.size(640*1.8, 480*1.8);
   video.hide();
   // start detecting hands from the webcam video
   // handPose.detectStart(video, gotHands);

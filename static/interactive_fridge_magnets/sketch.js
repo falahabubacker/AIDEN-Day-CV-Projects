@@ -19,10 +19,10 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(640*2, 480*2);
+  createCanvas(640*1.8, 480*1.8);
   // Detect video & load ML model
   video = createCapture(VIDEO, { flipped: true });
-  video.size(640*2, 480*2)
+  video.size(640*1.8, 480*1.8)
   video.hide();
   handPose.detectStart(video, gotHands);
   

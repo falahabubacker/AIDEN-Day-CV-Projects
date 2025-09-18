@@ -18,7 +18,7 @@ function preload() {
 
 function setup() {
   // Create canvas matching the image dimensions
-  createCanvas(640*2, 480*2);
+  createCanvas(640*1.8, 480*1.8);
 
   // Start detecting poses in the loaded image
   bodyPose.detectStart(video, gotPoses);
@@ -34,7 +34,8 @@ function gotPoses(results) {
 
 function draw() {
   // Display the image as the background
-  createCanvas(640*2, 480*2);
+  // createCanvas(640*1.8, 480*1.8);
+  image(video, 0, 0, width, height);
 
   // Ensure at least one pose is detected before proceeding
   if (poses.length > 0) {
