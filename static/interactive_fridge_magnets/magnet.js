@@ -1,5 +1,6 @@
-// let textMagnets = ["w", "elc", "o", "me", "to", "ai", "de", "n", "d", "ay"];
 let id = 0;
+let lock = false;
+let last_magnet;
 
 class Magnet {
   constructor() {
@@ -47,12 +48,20 @@ class Magnet {
     
     let distFromFingers = dist(this.pos.x, this.pos.y, this.fingerx, this.fingery);
     
+    if (lock && distBetweenFingers < 50) {
+      last_magnet.pos.x = this.fingerx;
+      last_magnet.pos.y = this.fingery;
+    } else {
     if (distBetweenFingers < 50 && distFromFingers < this.w/2) {
+      lock = true;
       this.c = color(255, 0, 0);
       this.pos.x = this.fingerx;
       this.pos.y = this.fingery;
+      last_magnet = this;
+      
     } else {
+      lock = false;
       this.c = color(255);
     }
-  }
+  }}
 }

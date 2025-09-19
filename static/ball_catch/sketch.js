@@ -29,20 +29,20 @@ let colorPalette = ["#abcd5e", "#14976b", "#2b67af", "#62b6de", "#f589a3", "#ef5
 
 function preload() {
   // Load the handPose model
-  handPose = ml5.handPose({maxHands: 1, flipped: true});
+  // handPose = ml5.handPose({maxHands: 1, flipped: true});
   bodyPose = ml5.bodyPose("BlazePose");
 }
 
 function setup() {
-  createCanvas(640*1.8, 480*1.8);
+  createCanvas(640, 480);
   // Create the webcam video and hide it
   video = createCapture(VIDEO, {flipped: true});
-  video.size(640*1.8, 480*1.8);
+  video.size(640, 480);
   video.hide();
   // start detecting hands from the webcam video
   // handPose.detectStart(video, gotHands);
   bodyPose.detectStart(video, gotPoses);
-  
+
   engine = Engine.create();
   bridge = new Bridge(num, radius, length);
 }
@@ -54,7 +54,7 @@ function draw() {
   stroke(0);
   
   // Draw the webcam video
-  // image(video, 0, 0, width, height);
+  image(video, 0, 0, width, height);
   
   if (Date.now() - last_time > 500) {
     circles.push(new Circle());
@@ -82,10 +82,10 @@ function draw() {
     fill(0, 255, 0);
     noStroke();
 
-    rightHand.x = lerp(last_rightHand.x, rightHand.x, 0.2)
-    rightHand.y = lerp(last_rightHand.y, rightHand.y, 0.2)
-    leftHand.x = lerp(last_leftHand.x, leftHand.x, 0.2)
-    leftHand.y = lerp(last_leftHand.y, leftHand.y, 0.2)
+    rightHand.x = lerp(last_rightHand.x, rightHand.x, 0.1)
+    rightHand.y = lerp(last_rightHand.y, rightHand.y, 0.1)
+    leftHand.x = lerp(last_leftHand.x, leftHand.x, 0.1)
+    leftHand.y = lerp(last_leftHand.y, leftHand.y, 0.1)
     
     circle(width - rightHand.x, rightHand.y, 10);
     circle(width - leftHand.x, leftHand.y, 10);

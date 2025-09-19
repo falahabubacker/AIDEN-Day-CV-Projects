@@ -9,8 +9,9 @@ https://www.pattvira.com/
 */
 
 let video; let handPose; let hands = [];
-let font; let size = 60;
-let textMagnets = ["Welcome", "to", "aiden", "day!"];
+let font; let size = 40;
+let textMagnets = ["Welcome", "to", "AIDEN", "day!", "MEA",
+                   "Engineering", "College", ":)", ""];
 let magnets = []; let num = textMagnets.length;
 let last_index; let last_thumb; let lerp_index; let lerp_thumb;
 
@@ -20,10 +21,10 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(640*1.8, 480*1.8);
+  createCanvas(640, 480);
   // Detect video & load ML model
   video = createCapture(VIDEO, { flipped: true });
-  video.size(640*1.8, 480*1.8)
+  video.size(640, 480)
   video.hide();
   handPose.detectStart(video, gotHands);
   
@@ -38,7 +39,7 @@ function draw() {
   background(220);
   
   // Display video and detect index and thumb position
-  // image(video, 0, 0, width, height);
+  image(video, 0, 0, width, height);
   if (hands.length > 0) {    
     noFill();
     stroke(0, 255, 0);
@@ -51,11 +52,11 @@ function draw() {
     index = hands[0].keypoints[8];
     thumb = hands[0].keypoints[4];
 
-    index.x = lerp(last_index.x, index.x, 0.2)
-    index.y = lerp(last_index.y, index.y, 0.2)
+    index.x = lerp(last_index.x, index.x, 0.5)
+    index.y = lerp(last_index.y, index.y, 0.5)
 
-    thumb.x = lerp(last_thumb.x, thumb.x, 0.2)
-    thumb.y = lerp(last_thumb.y, thumb.y, 0.2)    
+    thumb.x = lerp(last_thumb.x, thumb.x, 0.5)
+    thumb.y = lerp(last_thumb.y, thumb.y, 0.5)    
 
     text("index", index.x, index.y);
     text("thumb", thumb.x, thumb.y);

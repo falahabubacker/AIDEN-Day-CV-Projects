@@ -27,11 +27,11 @@ function gotHands(results) {
 }
 
 function setup() {
-  createCanvas(640*1.8, 480*1.8);
+  createCanvas(640, 480);
   colorMode(HSB);
 
   // Create an off-screen graphics buffer for painting
-  painting = createGraphics(640*1.8, 480*1.8);
+  painting = createGraphics(640, 480);
   painting.colorMode(HSB);
   painting.clear();
 

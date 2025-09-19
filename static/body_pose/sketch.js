@@ -5,22 +5,22 @@ let video;
 let bodyPose;
 let connections;
 let poses = [];
+let lerpPoints;
 
 function preload() {
-  
   // Initialize MoveNet model for body pose detection
   bodyPose = ml5.bodyPose("BlazePose");
 
   // Load an image to analyze
   // img = loadImage("embarrassing.jpg");
   video = createCapture(VIDEO, { flipped: true });
-  video.size(640*2, 480*2);
+  video.size(640, 480);
   // video.hide();
 }
 
 function setup() {
   // Create canvas matching the image dimensions
-  createCanvas(640*2, 480*2);
+  createCanvas(640, 480);
 
   // Start detecting poses in the loaded image
   bodyPose.detectStart(video, gotPoses);
@@ -53,17 +53,29 @@ function draw() {
       let confA = keyPointA.confidence;
       let confB = keyPointB.confidence;
 
+      if (!lerpPoints) {
+        lerpPoints = [];
+        for (let j = 0; j < pose.keypoints.length; j++) {
+          lerpPoints.push(createVector(pose.keypoints[j].x, pose.keypoints[j].y));
+        }
+      }
+
+      lerpPoints[a].x = lerp(lerpPoints[a].x, keyPointA.x, 0.9);
+      lerpPoints[a].y = lerp(lerpPoints[a].y, keyPointA.y, 0.9);
+      lerpPoints[b].x = lerp(lerpPoints[b].x, keyPointB.x, 0.9);
+      lerpPoints[b].y = lerp(lerpPoints[b].y, keyPointB.y, 0.9);
+
       // Only draw lines if both keypoints have sufficient confidence
       if (confA > 0.1 && confB > 0.1) {
         stroke(0, 0, 0);
         strokeWeight(8);
-        line(width - keyPointA.x, keyPointA.y, width - keyPointB.x, keyPointB.y);
+        line(width - lerpPoints[a].x, lerpPoints[a].y, width - lerpPoints[b].x, lerpPoints[b].y);
       }
     }
 
     // Loop through all keypoints and draw circles
     for (let i = 0; i < pose.keypoints.length; i++) {
-      let keypoint = pose.keypoints[i];
+      let keypoint = lerpPoints[i];
       fill(0);
       stroke(0, 0, 0);
       strokeWeight(3);
