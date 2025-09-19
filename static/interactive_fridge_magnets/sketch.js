@@ -12,6 +12,7 @@ let video; let handPose; let hands = [];
 let font; let size = 60;
 let textMagnets = ["Welcome", "to", "aiden", "day!"];
 let magnets = []; let num = textMagnets.length;
+let last_index; let last_thumb; let lerp_index; let lerp_thumb;
 
 function preload() {
   font = loadFont("static/interactive_fridge_magnets/Outfit-Regular.ttf"); // {{ url_for('static', filename='interactive_fridge_magnets/Outfit-Regular.ttf') }}
@@ -37,15 +38,30 @@ function draw() {
   background(220);
   
   // Display video and detect index and thumb position
-  image(video, 0, 0, width, height);
-  if (hands.length > 0) {
-    let index = hands[0].keypoints[8];
-    let thumb = hands[0].keypoints[4];
-    
+  // image(video, 0, 0, width, height);
+  if (hands.length > 0) {    
     noFill();
     stroke(0, 255, 0);
+
+    if (!last_index) {
+      last_index = hands[0].keypoints[8];
+      last_thumb = hands[0].keypoints[4];
+    }
+
+    index = hands[0].keypoints[8];
+    thumb = hands[0].keypoints[4];
+
+    index.x = lerp(last_index.x, index.x, 0.2)
+    index.y = lerp(last_index.y, index.y, 0.2)
+
+    thumb.x = lerp(last_thumb.x, thumb.x, 0.2)
+    thumb.y = lerp(last_thumb.y, thumb.y, 0.2)    
+
     text("index", index.x, index.y);
     text("thumb", thumb.x, thumb.y);
+
+    last_index = index;
+    last_thumb = thumb;
   
     for (let i=0; i<num; i++) {
       magnets[i].touch(thumb.x, thumb.y, index.x, index.y);

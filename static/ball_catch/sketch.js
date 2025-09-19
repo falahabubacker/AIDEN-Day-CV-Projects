@@ -13,7 +13,7 @@ let handPose;
 let video;
 let hands = [];
 let poses = [];
-let lerpPoints = [];
+let last_rightHand; let last_leftHand;
 
 const THUMB_TIP = 4;
 const INDEX_FINGER_TIP = 8;
@@ -54,7 +54,7 @@ function draw() {
   stroke(0);
   
   // Draw the webcam video
-  image(video, 0, 0, width, height);
+  // image(video, 0, 0, width, height);
   
   if (Date.now() - last_time > 500) {
     circles.push(new Circle());
@@ -72,10 +72,21 @@ function draw() {
   }
   
   if (poses.length > 0) {
+    if (!last_rightHand) {
+      last_rightHand = poses[0].keypoints[19];
+      last_leftHand = poses[0].keypoints[20];
+    }
+    
     let rightHand = poses[0].keypoints[19];
     let leftHand = poses[0].keypoints[20];
     fill(0, 255, 0);
     noStroke();
+
+    rightHand.x = lerp(last_rightHand.x, rightHand.x, 0.2)
+    rightHand.y = lerp(last_rightHand.y, rightHand.y, 0.2)
+    leftHand.x = lerp(last_leftHand.x, leftHand.x, 0.2)
+    leftHand.y = lerp(last_leftHand.y, leftHand.y, 0.2)
+    
     circle(width - rightHand.x, rightHand.y, 10);
     circle(width - leftHand.x, leftHand.y, 10);
     
@@ -84,6 +95,9 @@ function draw() {
     bridge.bodies[bridge.bodies.length-1].position.x = width - leftHand.x;
     bridge.bodies[bridge.bodies.length-1].position.y = leftHand.y;
     bridge.display();
+
+    last_rightHand = rightHand;
+    last_leftHand = leftHand;
   }
 }
 
