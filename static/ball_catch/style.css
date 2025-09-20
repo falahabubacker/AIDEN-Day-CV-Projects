@@ -25,3 +25,16 @@ main {
 canvas {
   display: block;
 }
+.heading {
+  height: 70px;
+  display: flex;
+  flex-direction: row;
+  justify-self: space-between;
+}
+.lArrow {
+  height: 100px;
+  transform: scaleX(-1);
+}
+.rArrow {
+  height: 100px;
+}

@@ -33,12 +33,24 @@ canvas {
   position: absolute;
   top: -10px;
   right: 0px;
-  width: 100%;
+  left: 0px;
+  width: auto;
   height: 200px;
   display: flex;
   justify-content: center;
-  gap: 20px;
+  align-items: center;
+  /* gap: 20px; */
 }
 .blazepose {
-  height: 100%;
+  height: 150px;
+}
+.stickman {
+  height: 150px;
+}
+.lArrow {
+  height: 100px;
+  transform: scaleX(-1);
+}
+.rArrow {
+  height: 100px;
 }
